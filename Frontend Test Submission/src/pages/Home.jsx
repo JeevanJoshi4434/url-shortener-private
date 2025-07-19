@@ -24,6 +24,11 @@ const Home = () => {
     fetchLinks();
   }, []);
 
+  const handleCopy = (url) => {
+    navigator.clipboard.writeText(url);
+    Log("frontend", "info", "copy", `Copied URL to clipboard: ${url}`);
+  };
+
   return (
     <>
       <Navbar />
@@ -36,23 +41,44 @@ const Home = () => {
           <p className="text-gray-600">No links available.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {links.map(link => (
-              <div key={link._id} className="p-4 border rounded-lg shadow bg-white">
-                <p className="text-gray-600 text-sm">Short link: <a href={`http://localhost:3000/${link._id}`} target="_blank" rel="noopener noreferrer">http://localhost:3000/{link._id}</a></p>
-                <p className="text-blue-600 break-all">
-                  Original URL: <a href={link.originalUrl} target="_blank" rel="noopener noreferrer">{link.originalUrl}</a>
-                </p>
-                <p className="text-sm text-gray-500">Created At: {new Date(link.createdAt).toLocaleString()}</p>
-                <p className="text-sm text-gray-500">Expires In: {Math.floor(link.expireIn / 60000)} mins</p>
-                <p className="text-sm text-gray-500">Clicks: {link.clicks?.length || 0}</p>
-                <button
-                  onClick={() => navigate(`/stats/${link._id}`)}
-                  className="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700"
-                >
-                  View Stats
-                </button>
-              </div>
-            ))}
+            {links.map(link => {
+              const shortUrl = `https://url-shortner-cj44.onrender.com/${link._id}`;
+              return (
+                <div key={link._id} className="p-4 border rounded-lg shadow bg-white">
+                  <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <span>Short link:</span>
+                    <a
+                      href={shortUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline break-all"
+                    >
+                      {shortUrl}
+                    </a>
+                    <button
+                      onClick={() => handleCopy(shortUrl)}
+                      className="ml-1 p-1 hover:text-blue-700"
+                      title="Copy to clipboard"
+                    >
+                      📋
+                    </button>
+                  </div>
+
+                  <p className="text-blue-600 break-all">
+                    Original URL: <a href={link.originalUrl} target="_blank" rel="noopener noreferrer">{link.originalUrl}</a>
+                  </p>
+                  <p className="text-sm text-gray-500">Created At: {new Date(link.createdAt).toLocaleString()}</p>
+                  <p className="text-sm text-gray-500">Expires In: {Math.floor(link.expireIn / 60000)} mins</p>
+                  <p className="text-sm text-gray-500">Clicks: {link.clicks?.length || 0}</p>
+                  <button
+                    onClick={() => navigate(`/stats/${link._id}`)}
+                    className="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700"
+                  >
+                    View Stats
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
