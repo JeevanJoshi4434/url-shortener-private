@@ -47,7 +47,7 @@ const SearchBar = () => {
                     Log("frontend", "error", "api", "Invalid URL");
                     return;
                 }
-                const res = await axios.post(`${process.env.REACT_APP_SERVICE_URL}/api/v1/shorturls`, {
+                const res = await axios.post(`/api/v1/shorturls`, {
                     url: url.url,
                     validity: url.expireIn ? Math.round(url.expireIn * 60 * 1000) : (1000*60*30),
                     shortCode: url.shortCode

@@ -18,7 +18,7 @@ const Redirect = () => {
 
             try {
                 Log("frontend", "info", "page", `Attempting to redirect with ID=${id}`);
-                const res = await axios.get(`${process.env.REACT_APP_SERVICE_URL}/api/v1/shorturls/redirect/${id}`);
+                const res = await axios.get(`/api/v1/shorturls/redirect/${id}`);
 
                 if (res.data?.data?.redirect) {
                     Log("frontend", "info", "page", `Redirecting to ${res.data.data.redirect}`);

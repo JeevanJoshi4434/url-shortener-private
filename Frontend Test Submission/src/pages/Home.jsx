@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVICE_URL}/api/v1/shorturls`);
+        const res = await axios.get(`/api/v1/shorturls`);
         setLinks(res.data.data || []);
         Log("frontend", "info", "page", "Fetched all short URLs successfully.");
       } catch (err) {

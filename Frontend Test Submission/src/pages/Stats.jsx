@@ -12,7 +12,7 @@ const Stats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVICE_URL}/api/v1/shorturls/${id}`);
+        const res = await axios.get(`/api/v1/shorturls/${id}`);
         setData(res.data.data);
         Log("frontend", "info", "page", `Stats loaded for ${id}`);
       } catch (err) {
